@@ -1,0 +1,39 @@
+.timeLine li {
+  width: 100%;
+  position: relative;
+  pointer-events: auto;
+}
+.timeLine li::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: #faf5ea;
+}
+.timeLine li::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: #333;
+  transform: scale(0.05, 0);
+  transform-origin: left top;
+  transition: transform 0.5s;
+}
+.timeLine li:hover::after {
+  transform: scaleX(1);
+}
+
+.timeLine .active::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: #333;
+}

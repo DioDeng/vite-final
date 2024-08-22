@@ -1,0 +1,12 @@
+// Variable overrides first
+$primary: #26498d;
+$warning: #ffd370;
+$danger: #973532;
+$dark: #333;
+$h6-font-size: 14px;
+$h5-font-size: 16px;
+
+// Then import Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+@import './helpers/main.scss';
