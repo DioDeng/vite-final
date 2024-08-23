@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  <Navbar :nickname="nickname" />
   <section class="h-100 d-flex flex-column justify-content-center align-items-center">
     <!-- 新增代辦事項按鈕 -->
     <div class="col-md-6 col-12 mb-3">
@@ -37,6 +37,7 @@ import TodoList from '@/components/TodolistModal.vue'
 
 const tempTodo = ref('')
 const todoList = ref([])
+const nickname = ref('')
 
 const router = useRouter()
 
@@ -54,7 +55,8 @@ const checkOut = () => {
     }
   })
     .then((res) => {
-      console.log(res)
+      console.log('check:', res)
+      nickname.value = res.data.nickname
     })
     .catch((err) => {
       console.log(err)
