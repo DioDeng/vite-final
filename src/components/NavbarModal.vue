@@ -1,5 +1,5 @@
 <template>
-  <section class="fixed-top px-4 pt-3">
+  <section class="px-md-4 pt-3 mb-3 mb-md-0 fixedTop">
     <div class="d-flex justify-content-between align-items-center">
       <div>
         <img src="@/assets/images/logo_lg.png" style="width: 80%" alt="" />
@@ -16,6 +16,18 @@
     </div>
   </section>
 </template>
+
+<style lang="scss">
+@media (min-width: 768px) {
+  .fixedTop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+  }
+}
+</style>
 
 <script setup>
 import { ref, defineProps } from 'vue'

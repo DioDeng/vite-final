@@ -37,8 +37,8 @@
     </ul>
     <div class="card-body">
       <!-- 全部 -->
-      <ul class="list-unstyled" v-if="select === 0">
-        <template v-for="item in props.todoList" :key="item.id">
+      <ul class="list-unstyled">
+        <template v-for="item in tempTodoList" :key="item.id">
           <li class="d-flex align-items-center border-bottom pb-2 mb-3 deleteSet">
             <a href="#" @click="toggleStatus(item.id)"
               ><i
@@ -62,65 +62,8 @@
           </li>
         </template>
       </ul>
-      <!-- 待完成 -->
-      <ul class="list-unstyled" v-else-if="select === 1">
-        <template v-for="item in props.todoList" :key="item.id">
-          <li
-            class="d-flex align-items-center border-bottom pb-2 mb-3 deleteSet"
-            :class="{ 'd-none': item.status }"
-          >
-            <a href="#" @click="toggleStatus(item.id)"
-              ><i
-                class="bi h4"
-                :class="[item.status ? 'bi-check2-square text-warning' : 'bi-app text-dark']"
-              ></i></a
-            ><span
-              class="ms-3"
-              :class="[
-                { 'text-decoration-line-through': item.status },
-                { 'text-black-50': item.status }
-              ]"
-              >{{ item.content }}</span
-            >
-            <a
-              href="#"
-              class="ms-auto text-decoration-none deleteHover"
-              @click="deleteTodo(item.id)"
-              >X</a
-            >
-          </li>
-        </template>
-      </ul>
-      <!-- 已完成 -->
-      <ul class="list-unstyled" v-else>
-        <template v-for="item in props.todoList" :key="item.id">
-          <li
-            class="d-flex align-items-center border-bottom pb-2 mb-3 deleteSet"
-            :class="{ 'd-none': !item.status }"
-          >
-            <a href="#" @click="toggleStatus(item.id)"
-              ><i
-                class="bi h4"
-                :class="[item.status ? 'bi-check2-square text-warning' : 'bi-app text-dark']"
-              ></i></a
-            ><span
-              class="ms-3"
-              :class="[
-                { 'text-decoration-line-through': item.status },
-                { 'text-black-50': item.status }
-              ]"
-              >{{ item.content }}</span
-            >
-            <a
-              href="#"
-              class="ms-auto text-decoration-none deleteHover"
-              @click="deleteTodo(item.id)"
-              >X</a
-            >
-          </li>
-        </template>
-      </ul>
     </div>
+    <div class="card-footer">{{ unCompletNum.length }}待完成項目</div>
   </div>
 </template>
 
@@ -136,10 +79,11 @@
 </style>
 
 <script setup>
-import { defineEmits, defineProps, ref } from 'vue'
+import { defineEmits, defineProps, ref, computed, watch } from 'vue'
 import { apiPatchTodo, apiDeleteTodo } from '@/assets/javascript/api'
 
 const select = ref(0)
+const tempTodoList = ref([])
 const props = defineProps(['todoList'])
 const emit = defineEmits(['getTodos'])
 
@@ -150,7 +94,15 @@ const hakkaCookie = ref(
     '$1'
   )
 )
+const unCompletNum = computed(() => props.todoList.filter((e) => !e.status))
+watch(props, () => {
+  selectTodolist()
+})
+watch(select, () => {
+  selectTodolist()
+})
 
+// 方法
 const deleteTodo = (id) => {
   apiDeleteTodo(id, {
     headers: {
@@ -179,5 +131,14 @@ const toggleStatus = (id) => {
     .catch((err) => {
       console.log(err)
     })
+}
+const selectTodolist = () => {
+  if (select.value === 1) {
+    tempTodoList.value = props.todoList.filter((e) => !e.status)
+  } else if (select.value === 2) {
+    tempTodoList.value = props.todoList.filter((e) => e.status)
+  } else {
+    tempTodoList.value = props.todoList
+  }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <Navbar :nickname="nickname" />
-  <section class="h-100 d-flex flex-column justify-content-center align-items-center">
+  <section class="h-100 d-md-flex flex-column justify-content-center align-items-center">
     <!-- 新增代辦事項按鈕 -->
     <div class="col-md-6 col-12 mb-3">
       <div class="input-group shadow w-100 rounded-3">
